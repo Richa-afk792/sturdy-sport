@@ -11,7 +11,7 @@ const team_1 = require("./models/team");
 const user_1 = require("./models/user");
 const workout_1 = require("./models/workout");
 const app = (0, express_1.default)();
-const port = Number(process.env.PORT) || 8000;
+const port = 8000;
 const codespaceName = process.env.CODESPACE_NAME;
 const apiBaseUrl = codespaceName
     ? `https://${codespaceName}-8000.app.github.dev`

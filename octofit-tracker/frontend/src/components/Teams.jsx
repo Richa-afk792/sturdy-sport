@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { fetchFromApi, handleResponse } from '../utils/api'
 
+// API endpoint: https://{VITE_CODESPACE_NAME}-8000.app.github.dev/api/teams
+
 function Teams() {
   const [teams, setTeams] = useState([])
   const [loading, setLoading] = useState(true)

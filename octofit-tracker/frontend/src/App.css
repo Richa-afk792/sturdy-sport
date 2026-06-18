@@ -1,3 +1,18 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-container nav {
+  flex-shrink: 0;
+}
+
+.app-container main {
+  flex: 1;
+  background-color: var(--bg);
+}
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;

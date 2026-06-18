@@ -1,121 +1,118 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import { useEffect, useState } from 'react'
+import { Routes, Route, Link } from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
+import Activities from './components/Activities'
+import Leaderboard from './components/Leaderboard'
+import Teams from './components/Teams'
+import Users from './components/Users'
+import Workouts from './components/Workouts'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [apiConfigured, setApiConfigured] = useState(false)
+
+  useEffect(() => {
+    // Check if API is properly configured
+    const codespaceName = import.meta.env.VITE_CODESPACE_NAME
+    if (!codespaceName) {
+      console.warn(
+        'VITE_CODESPACE_NAME not set. API will default to localhost:8000'
+      )
+    }
+    setApiConfigured(true)
+  }, [])
+
+  if (!apiConfigured) {
+    return <div>Loading...</div>
+  }
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="app-container">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <div className="container-fluid">
+          <Link className="navbar-brand" to="/">
+            Octofit Tracker
+          </Link>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav ms-auto">
+              <li className="nav-item">
+                <Link className="nav-link" to="/users">
+                  Users
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/activities">
+                  Activities
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/workouts">
+                  Workouts
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/teams">
+                  Teams
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/leaderboard">
+                  Leaderboard
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div>
-          <h1>Get started</h1>
+      </nav>
+
+      <main className="container-fluid py-4">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/activities" element={<Activities />} />
+          <Route path="/workouts" element={<Workouts />} />
+          <Route path="/teams" element={<Teams />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
+        </Routes>
+      </main>
+    </div>
+  )
+}
+
+function Home() {
+  return (
+    <div className="row">
+      <div className="col-md-8 mx-auto">
+        <h1 className="mb-4">Welcome to Octofit Tracker</h1>
+        <p className="lead">
+          Track your workouts, build teams, and compete on the leaderboard!
+        </p>
+        <div className="alert alert-info">
+          <h5>Getting Started</h5>
           <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+            Use the navigation menu to explore different sections of the app:
           </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
           <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
+            <li><strong>Users</strong> - Manage user profiles</li>
+            <li><strong>Activities</strong> - Log and track activities</li>
+            <li><strong>Workouts</strong> - Create and manage workout routines</li>
+            <li><strong>Teams</strong> - Create and join teams</li>
+            <li><strong>Leaderboard</strong> - View competitive rankings</li>
           </ul>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+      </div>
+    </div>
   )
 }
 

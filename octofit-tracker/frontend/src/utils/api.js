@@ -59,21 +59,28 @@ export const fetchFromApi = async (endpoint, options = {}) => {
 };
 
 /**
- * Handle paginated responses
+ * Handle various response formats from the API
  * @param {object} data - The API response
- * @returns {array} Array of items (handles both paginated and direct array responses)
+ * @returns {array} Array of items (handles items, results, and direct array responses)
  */
 export const handleResponse = (data) => {
-  // Handle paginated response format
-  if (data && typeof data === 'object') {
-    // If response has a 'results' key (paginated format)
-    if (Array.isArray(data.results)) {
-      return data.results;
-    }
-    // If response is already an array
-    if (Array.isArray(data)) {
-      return data;
-    }
+  if (!data || typeof data !== 'object') {
+    return [];
+  }
+  
+  // If response has an 'items' key (octofit backend format)
+  if (Array.isArray(data.items)) {
+    return data.items;
+  }
+  
+  // If response has a 'results' key (paginated format)
+  if (Array.isArray(data.results)) {
+    return data.results;
+  }
+  
+  // If response is already an array
+  if (Array.isArray(data)) {
+    return data;
   }
   
   return [];
